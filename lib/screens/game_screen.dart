@@ -16,18 +16,13 @@ class _GameScreenState extends State<GameScreen> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         children: [
-          Container(
-            child: LetterBoardComponent(),
-          ),
+          Container(child: LetterBoardComponent()),
           Expanded(
-            child: Container(
-              child: Text('Klawaitura'),
-              color: Colors.red,
-            ),
-          )
+            child: Container(child: Text('Klawaitura'), color: Colors.red),
+          ),
         ],
-      )
-      );
+      ),
+    );
   }
 }
 
