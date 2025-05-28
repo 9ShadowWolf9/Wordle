@@ -14,8 +14,8 @@ class LetterTile extends StatelessWidget {
         margin: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Colors.grey.shade200, // white-ish bg
-          border: Border.all(color: Colors.grey.shade700),
+          color: Theme.of(context).colorScheme.secondary, // white-ish bg
+          border: Border.all(color: Theme.of(context).colorScheme.primary),
         ),
         child: Center(
           child: Text(

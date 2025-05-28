@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wordle/components/letter_board_component.dart';
 import 'package:wordle/widgets/keyboard_tile.dart'; // Custom keyboard widget
 
 class GameScreen extends StatefulWidget {
@@ -37,16 +38,10 @@ class _GameScreenState extends State<GameScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 20),
-            Center(
-              child: Text(
-                currentInput,
-                style: const TextStyle(fontSize: 28, letterSpacing: 8),
-              ),
-            ),
+            LetterBoardComponent(),
             const Spacer(),
             OnScreenKeyboard(onKeyPress: _handleKeyPress),
-            const SizedBox(height: 16),
+            const SizedBox(height: 45),
           ],
         ),
       ),
