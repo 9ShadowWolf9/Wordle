@@ -10,8 +10,8 @@ class LetterTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(4), // odstęp między kafelkami
-      width: 50,
-      height: 50,
+      width: 55,
+      height: 55,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: Colors.grey,

@@ -14,8 +14,20 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: const LetterBoardComponent() ,
-    );
+      body: Column(
+        children: [
+          Container(
+            child: LetterBoardComponent(),
+          ),
+          Expanded(
+            child: Container(
+              child: Text('Klawaitura'),
+              color: Colors.red,
+            ),
+          )
+        ],
+      )
+      );
   }
 }
 
