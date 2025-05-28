@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OnScreenKeyboard extends StatelessWidget {
@@ -14,69 +13,96 @@ class OnScreenKeyboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    const horizontalPadding = 16.0;
+    const spacing = 4.0;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         ...keys.map((row) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: row.map((key) {
-              return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 2), // tighter spacing
-                child: ElevatedButton(
-                  onPressed: () => onKeyPress(key),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey.shade400,
-                    minimumSize: const Size(36, 48), // normal size
-                    padding: EdgeInsets.zero,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
+          final totalSpacing = spacing * (row.length - 1);
+          final buttonWidth = (screenWidth - horizontalPadding * 2 - totalSpacing) / row.length;
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: row.map((key) {
+                return Container(
+                  margin: EdgeInsets.only(right: key != row.last ? spacing : 0),
+                  child: SizedBox(
+                    width: buttonWidth,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: () => onKeyPress(key),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey.shade400,
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: Text(
+                        key,
+                        style: const TextStyle(fontSize: 16, color: Colors.black),
+                      ),
                     ),
                   ),
-                  child: Text(key, style: const TextStyle(fontSize: 16, color: Colors.black)),
-                ),
-              );
-            }).toList(),
+                );
+              }).toList(),
+            ),
           );
         }).toList(),
-        const SizedBox(height: 4), // minimal spacing between rows
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 1),
-              child: ElevatedButton(
-                onPressed: () => onKeyPress("ENTER"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey.shade400,
-                  minimumSize: const Size(70, 48),
-                  padding: EdgeInsets.zero,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
+
+        const SizedBox(height: 4),
+
+        // ENTER + BACKSPACE row
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                flex: 2,
+                child: SizedBox(
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: () => onKeyPress("ENTER"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey.shade400,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    child: const Text("ENTER", style: TextStyle(fontSize: 14, color: Colors.black)),
                   ),
                 ),
-                child: const Text("ENTER", style: TextStyle(fontSize: 14, color: Colors.black)),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 2),
-              child: ElevatedButton(
-                onPressed: () => onKeyPress("BACKSPACE"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey.shade400,
-                  minimumSize: const Size(48, 48),
-                  padding: EdgeInsets.zero,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
+              const SizedBox(width: spacing),
+              Expanded(
+                flex: 1,
+                child: SizedBox(
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: () => onKeyPress("BACKSPACE"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey.shade400,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    child: const Icon(Icons.backspace, size: 20, color: Colors.black),
                   ),
                 ),
-                child: const Icon(Icons.backspace, size: 20, color: Colors.black,),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
