@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-//TODO: Create letter tile
+//TODO: Create letter tile (default: white bgcolor and grey border)
 class LetterTile extends StatelessWidget {
   const LetterTile({super.key});
 
