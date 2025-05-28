@@ -16,7 +16,10 @@ class _GameScreenState extends State<GameScreen> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         children: [
-          Container(child: LetterBoardComponent()),
+          Container(
+            padding: EdgeInsets.only(top: 20),
+            child: LetterBoardComponent(),
+          ),
           Expanded(
             child: Container(child: Text('Klawaitura'), color: Colors.red),
           ),

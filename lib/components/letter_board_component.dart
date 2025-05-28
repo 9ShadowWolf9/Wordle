@@ -7,71 +7,24 @@ class LetterBoardComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get max width of screen or limit max width for the board
+    final maxBoardWidth = MediaQuery.of(context).size.width * 0.9;
+    // Or set fixed max width e.g. 350 for consistency
+    final boardWidth = maxBoardWidth > 350 ? 350.0 : maxBoardWidth;
+
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: const [
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: const [
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: const [
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: const [
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: const [
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: const [
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-              LetterTile(),
-            ],
-          ),
-        ],
+      child: Container(
+        width: boardWidth,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: List.generate(6, (rowIndex) {
+            return Row(
+              children: List.generate(5, (tileIndex) {
+                return Expanded(child: LetterTile());
+              }),
+            );
+          }),
+        ),
       ),
     );
   }
