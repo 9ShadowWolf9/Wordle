@@ -14,6 +14,7 @@ class LetterBoardComponent extends StatelessWidget {
 
     return Center(
       child: Container(
+        padding: EdgeInsets.only(top: 45),
         width: boardWidth,
         child: Column(
           mainAxisSize: MainAxisSize.min,
