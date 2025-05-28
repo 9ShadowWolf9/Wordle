@@ -2,7 +2,9 @@ import 'package:wordle/widgets/letter_tile.dart';
 import 'package:flutter/material.dart';
 
 class LetterBoardComponent extends StatelessWidget {
-  const LetterBoardComponent({super.key});
+  final String currentWord;
+
+  const LetterBoardComponent({super.key, required this.currentWord});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,11 @@ class LetterBoardComponent extends StatelessWidget {
           children: List.generate(6, (rowIndex) {
             return Row(
               children: List.generate(5, (tileIndex) {
-                return Expanded(child: LetterTile());
+                String letter = '';
+                if (rowIndex == 0 && tileIndex < currentWord.length) {
+                  letter = currentWord[tileIndex];
+                }
+                return Expanded(child: LetterTile(letter: letter));
               }),
             );
           }),

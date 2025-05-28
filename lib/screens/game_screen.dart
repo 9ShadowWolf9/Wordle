@@ -39,8 +39,8 @@ class _GameScreenState extends State<GameScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Expanded(flex: 2, child: LetterBoardComponent()),
-            Expanded(child: OnScreenKeyboard(onKeyPress: _handleKeyPress)),
+            LetterBoardComponent(currentWord: currentInput),
+            OnScreenKeyboard(onKeyPress: _handleKeyPress),
           ],
         ),
       ),
