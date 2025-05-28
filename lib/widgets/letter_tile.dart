@@ -19,11 +19,7 @@ class LetterTile extends StatelessWidget {
         child: Center(
           child: Text(
             letter,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
+            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
         ),
       ),
