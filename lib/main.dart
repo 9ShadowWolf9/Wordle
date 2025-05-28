@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wordle/screens/settings_screen.dart';
-import 'package:wordle/themes/light_mode.dart';
 import 'package:wordle/themes/theme_provider.dart';
 import 'screens/game_screen.dart';
 import 'models/word_list.dart';

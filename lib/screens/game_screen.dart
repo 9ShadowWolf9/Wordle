@@ -17,17 +17,15 @@ class _GameScreenState extends State<GameScreen> {
       body: Column(
         children: [
           Container(
+            padding: EdgeInsets.only(top: 20),
             child: LetterBoardComponent(),
           ),
           Expanded(
-            child: Container(
-              child: Text('Klawaitura'),
-              color: Colors.red,
-            ),
-          )
+            child: Container(child: Text('Klawaitura'), color: Colors.red),
+          ),
         ],
-      )
-      );
+      ),
+    );
   }
 }
 
