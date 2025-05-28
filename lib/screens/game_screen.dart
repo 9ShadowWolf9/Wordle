@@ -1,55 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wordle/components/letter_board_component.dart';
+import 'package:wordle/models/game_logic.dart';
 import 'package:wordle/widgets/keyboard_tile.dart';
 
-class GameScreen extends StatefulWidget {
+class GameScreen extends StatelessWidget {
   const GameScreen({super.key});
 
   @override
-  State<GameScreen> createState() => _GameScreenState();
-}
-
-class _GameScreenState extends State<GameScreen> {
-  final int maxWordLength = 5;
-  final int maxRows = 6;
-
-  List<String> guesses = List.generate(6, (_) => '');
-  int currentRow = 0;
-
-  void _handleKeyPress(String key) {
-    setState(() {
-      if (key == 'ENTER') {
-        if (guesses[currentRow].length == maxWordLength) {
-          print('Entered word: ${guesses[currentRow]}');
-          // TODO: Word validation logic here
-          if (currentRow < maxRows - 1) {
-            currentRow++;
-          }
-        }
-      } else if (key == 'BACKSPACE' || key == '←') {
-        if (guesses[currentRow].isNotEmpty) {
-          guesses[currentRow] = guesses[currentRow].substring(
-            0,
-            guesses[currentRow].length - 1,
-          );
-        }
-      } else if (guesses[currentRow].length < maxWordLength &&
-          RegExp(r'^[A-Z]$').hasMatch(key)) {
-        guesses[currentRow] += key;
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final gameState = Provider.of<GameState>(context, listen: false);
+
+    void handleKeyPress(String key) {
+      if (key == 'ENTER') {
+        gameState.submitWord();
+      } else if (key == 'BACKSPACE') {
+        gameState.removeLetter();
+      } else if (RegExp(r'^[A-Z]$').hasMatch(key)) {
+        gameState.addLetter(key);
+      }
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            LetterBoardComponent(guesses: guesses),
-            OnScreenKeyboard(onKeyPress: _handleKeyPress),
+            const LetterBoardComponent(),
+            OnScreenKeyboard(onKeyPress: handleKeyPress),
           ],
         ),
       ),
