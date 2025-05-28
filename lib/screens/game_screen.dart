@@ -11,6 +11,8 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
-    return Column();
+    return Scaffold(backgroundColor: Theme.of(context).colorScheme.surface);
   }
 }
+
+//Theme.of(context).colorScheme.surface to sie odwołuje do folderu themes i podajesz który kolor z jasnego/ciemnego ma być

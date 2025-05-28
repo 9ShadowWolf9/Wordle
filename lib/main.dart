@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wordle/themes/light_mode.dart';
+import 'package:wordle/themes/theme_provider.dart';
 import 'screens/game_screen.dart';
 import 'models/word_list.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,6 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: Provider.of<ThemeProvider>(context).themeData,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         key: scaffoldKey,
@@ -20,21 +29,22 @@ class MyApp extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
-                decoration: BoxDecoration(color: Colors.blue),
-                child: Text(
-                  'Settings',
-                  style: TextStyle(color: Colors.white, fontSize: 24),
-                ),
+                child: Center(child: Icon(Icons.account_balance, size: 40)),
               ),
               ListTile(
-                leading: Icon(Icons.info),
-                title: Text('About'),
+                leading: Icon(Icons.home),
+                title: Text('Wordle'),
                 onTap: () {
-                  // Add action for About
-                  Navigator.pop(scaffoldKey.currentContext!); // close drawer
+                  Navigator.pop(context);
                 },
               ),
-              // Add more drawer items here
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
             ],
           ),
         ),
@@ -85,7 +95,7 @@ class MyApp extends StatelessWidget {
             ],
           ),
         ),
-        body: Center(child: Text('Game screen placeholder')),
+        body: GameScreen(),
       ),
     );
   }
