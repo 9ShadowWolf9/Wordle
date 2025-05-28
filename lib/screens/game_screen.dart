@@ -37,11 +37,10 @@ class _GameScreenState extends State<GameScreen> {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             LetterBoardComponent(),
-            const Spacer(),
             OnScreenKeyboard(onKeyPress: _handleKeyPress),
-            const SizedBox(height: 45),
           ],
         ),
       ),
