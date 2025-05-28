@@ -42,7 +42,7 @@ class OnScreenKeyboard extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () => onKeyPress(key),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: defaultColor,
+                            backgroundColor: Theme.of(context).colorScheme.primary,
                             padding: EdgeInsets.zero,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             shape: RoundedRectangleBorder(
@@ -51,9 +51,9 @@ class OnScreenKeyboard extends StatelessWidget {
                           ),
                           child: Text(
                             key,
-                            style: const TextStyle(
+                            style:  TextStyle(
                               fontSize: 16,
-                              color: Colors.black,
+                              color: Theme.of(context).colorScheme.secondary,
                             ),
                           ),
                         ),
@@ -79,16 +79,16 @@ class OnScreenKeyboard extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () => onKeyPress("ENTER"),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: defaultColor,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       padding: EdgeInsets.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "ENTER",
-                      style: TextStyle(fontSize: 14, color: Colors.black),
+                      style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.secondary),
                     ),
                   ),
                 ),
@@ -101,17 +101,17 @@ class OnScreenKeyboard extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () => onKeyPress("BACKSPACE"),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: defaultColor,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       padding: EdgeInsets.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
-                    child: const Icon(
+                    child:  Icon(
                       Icons.backspace,
                       size: 20,
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                 ),
