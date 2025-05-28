@@ -14,6 +14,10 @@ class OnScreenKeyboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    const horizontalPadding = 16.0;
+    const spacing = 4.0;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -48,6 +52,38 @@ class OnScreenKeyboard extends StatelessWidget {
                     ),
                   );
                 }).toList(),
+          final totalSpacing = spacing * (row.length - 1);
+          final buttonWidth = (screenWidth - horizontalPadding * 2 - totalSpacing) / row.length;
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: row.map((key) {
+                return Container(
+                  margin: EdgeInsets.only(right: key != row.last ? spacing : 0),
+                  child: SizedBox(
+                    width: buttonWidth,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: () => onKeyPress(key),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.grey.shade400,
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: Text(
+                        key,
+                        style: const TextStyle(fontSize: 16, color: Colors.black),
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
           );
         }).toList(),
         const SizedBox(height: 4), // minimal spacing between rows
@@ -94,6 +130,54 @@ class OnScreenKeyboard extends StatelessWidget {
               ),
             ),
           ],
+
+        const SizedBox(height: 4),
+
+        // ENTER + BACKSPACE row
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                flex: 2,
+                child: SizedBox(
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: () => onKeyPress("ENTER"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey.shade400,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    child: const Text("ENTER", style: TextStyle(fontSize: 14, color: Colors.black)),
+                  ),
+                ),
+              ),
+              const SizedBox(width: spacing),
+              Expanded(
+                flex: 1,
+                child: SizedBox(
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: () => onKeyPress("BACKSPACE"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey.shade400,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    child: const Icon(Icons.backspace, size: 20, color: Colors.black),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
