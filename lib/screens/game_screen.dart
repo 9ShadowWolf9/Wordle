@@ -11,6 +11,6 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Row(children: [LetterTile(), LetterTile()]));
+    return Row(children: [LetterTile(), LetterTile()]);
   }
 }
