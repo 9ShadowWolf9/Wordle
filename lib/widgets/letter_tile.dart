@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-//TODO: Create letter tile (default: white bgcolor and grey border)
 class LetterTile extends StatelessWidget {
   final String letter;
 
@@ -9,12 +8,12 @@ class LetterTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 1, // keeps the tile square
+      aspectRatio: 1,
       child: Container(
         margin: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Theme.of(context).colorScheme.secondary, // white-ish bg
+          color: Theme.of(context).colorScheme.secondary,
           border: Border.all(color: Theme.of(context).colorScheme.primary),
         ),
         child: Center(
