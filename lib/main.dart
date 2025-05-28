@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wordle/screens/settings_screen.dart';
 import 'package:wordle/themes/light_mode.dart';
 import 'package:wordle/themes/theme_provider.dart';
 import 'screens/game_screen.dart';
@@ -25,32 +26,41 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         key: scaffoldKey,
         drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                child: Center(child: Icon(Icons.account_balance, size: 40)),
-              ),
-              ListTile(
-                leading: Icon(Icons.home),
-                title: Text('Wordle'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
+          child: Builder(
+            builder: (BuildContext context) {
+              return ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  DrawerHeader(
+                    child: Center(child: Icon(Icons.account_balance, size: 40)),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.home),
+                    title: Text('Wordle'),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.settings),
+                    title: Text('Settings'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SettingsScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              );
+            },
           ),
         ),
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
           elevation: 0,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,17 +75,13 @@ class MyApp extends StatelessWidget {
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.settings, size: 32, color: Colors.black),
+                    child: Icon(Icons.settings, size: 32),
                   ),
                 ),
               ),
               Text(
                 'WORDLE',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
               ),
               Material(
                 color: Colors.transparent,
@@ -88,7 +94,7 @@ class MyApp extends StatelessWidget {
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.refresh, size: 32, color: Colors.black),
+                    child: Icon(Icons.refresh, size: 32),
                   ),
                 ),
               ),
