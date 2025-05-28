@@ -24,11 +24,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    print(WordList.getRandomWord().word);
-  }
-
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -101,8 +96,7 @@ class _MyAppState extends State<MyApp> {
                 child: InkWell(
                   customBorder: CircleBorder(),
                   onTap: () {
-                    var word = WordList.getRandomWord();
-                    print(word.word);
+                    Provider.of<GameState>(context, listen: false).reset();
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

@@ -62,7 +62,6 @@ class GameState extends ChangeNotifier {
     List<LetterStatus> status = List.filled(wordLength, LetterStatus.absent);
     List<bool> matchedTarget = List.filled(wordLength, false);
 
-    // First pass: exact matches
     for (int i = 0; i < wordLength; i++) {
       if (guess[i] == targetWord[i]) {
         status[i] = LetterStatus.correct;
@@ -71,7 +70,6 @@ class GameState extends ChangeNotifier {
       }
     }
 
-    // Second pass: present letters
     for (int i = 0; i < wordLength; i++) {
       if (status[i] == LetterStatus.correct) continue;
       for (int j = 0; j < wordLength; j++) {
@@ -79,7 +77,6 @@ class GameState extends ChangeNotifier {
           status[i] = LetterStatus.present;
           matchedTarget[j] = true;
 
-          // Only upgrade if not already correct
           if (usedKeys[guess[i]] != LetterStatus.correct) {
             usedKeys[guess[i]] = LetterStatus.present;
           }
