@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wordle/components/letter_board_component.dart';
-import 'package:wordle/widgets/keyboard_tile.dart'; // Custom keyboard widget
+import 'package:wordle/widgets/keyboard_tile.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -10,23 +10,32 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  String currentInput = '';
   final int maxWordLength = 5;
+  final int maxRows = 6;
+
+  List<String> guesses = List.generate(6, (_) => '');
+  int currentRow = 0;
 
   void _handleKeyPress(String key) {
     setState(() {
       if (key == 'ENTER') {
-        if (currentInput.length == maxWordLength) {
-          print('Entered word: $currentInput');
-          // TODO: Handle word validation and game logic here
-          currentInput = '';
+        if (guesses[currentRow].length == maxWordLength) {
+          print('Entered word: ${guesses[currentRow]}');
+          // TODO: Word validation logic here
+          if (currentRow < maxRows - 1) {
+            currentRow++;
+          }
         }
       } else if (key == 'BACKSPACE' || key == '←') {
-        if (currentInput.isNotEmpty) {
-          currentInput = currentInput.substring(0, currentInput.length - 1);
+        if (guesses[currentRow].isNotEmpty) {
+          guesses[currentRow] = guesses[currentRow].substring(
+            0,
+            guesses[currentRow].length - 1,
+          );
         }
-      } else if (currentInput.length < maxWordLength) {
-        currentInput += key;
+      } else if (guesses[currentRow].length < maxWordLength &&
+          RegExp(r'^[A-Z]$').hasMatch(key)) {
+        guesses[currentRow] += key;
       }
     });
   }
@@ -39,7 +48,7 @@ class _GameScreenState extends State<GameScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            LetterBoardComponent(currentWord: currentInput),
+            LetterBoardComponent(guesses: guesses),
             OnScreenKeyboard(onKeyPress: _handleKeyPress),
           ],
         ),
