@@ -19,14 +19,26 @@ class OnScreenKeyboard extends StatelessWidget {
 
     switch (status) {
       case LetterStatus.correct:
-        return Colors.green;
+        return const Color(0xFF033774);
       case LetterStatus.present:
-        return Colors.orange;
+        return const Color(0xFFF3C623);
       case LetterStatus.absent:
-        return Colors.grey;
+        return const Color(0xFFD9001A);
       default:
-        return Colors.grey.shade400;
+        return Theme.of(context).colorScheme.primary;
     }
+  }
+
+  Color _getKeyTextColor(BuildContext context, String key) {
+    final gameState = Provider.of<GameState>(context);
+    final status = gameState.usedKeys[key];
+
+    if (status == LetterStatus.correct ||
+        status == LetterStatus.present ||
+        status == LetterStatus.absent) {
+      return Colors.white;
+    }
+    return Theme.of(context).colorScheme.secondary;
   }
 
   @override
@@ -34,7 +46,7 @@ class OnScreenKeyboard extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     const horizontalPadding = 16.0;
     const spacing = 4.0;
-    final defaultColor = Colors.grey.shade400;
+    final defaultColor = Theme.of(context).colorScheme.primary;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -48,43 +60,42 @@ class OnScreenKeyboard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 2),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children:
-                  row.map((key) {
-                    return Container(
-                      margin: EdgeInsets.only(
-                        right: key != row.last ? spacing : 0,
-                      ),
-                      child: SizedBox(
-                        width: buttonWidth,
-                        height: 48,
-                        child: ElevatedButton(
-                          onPressed: () => onKeyPress(key),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: _getKeyColor(context, key),
-                            padding: EdgeInsets.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                          child: Text(
-                            key,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
+              children: row.map((key) {
+                return Container(
+                  margin: EdgeInsets.only(
+                    right: key != row.last ? spacing : 0,
+                  ),
+                  child: SizedBox(
+                    width: buttonWidth,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: () => onKeyPress(key),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _getKeyColor(context, key),
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                    );
-                  }).toList(),
+                      child: Text(
+                        key,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: _getKeyTextColor(context, key),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
             ),
           );
         }).toList(),
 
         const SizedBox(height: 4),
 
-        // ENTER + BACKSPACE row
+
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
           child: Row(
@@ -104,9 +115,12 @@ class OnScreenKeyboard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "ENTER",
-                      style: TextStyle(fontSize: 14, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
                     ),
                   ),
                 ),
@@ -119,17 +133,17 @@ class OnScreenKeyboard extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () => onKeyPress("BACKSPACE"),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade400,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       padding: EdgeInsets.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.backspace,
                       size: 20,
-                      color: Colors.black,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
                   ),
                 ),
