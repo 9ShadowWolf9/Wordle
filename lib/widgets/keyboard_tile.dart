@@ -2,12 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wordle/models/game_logic.dart';
 
-class OnScreenKeyboard extends StatelessWidget {
+class OnScreenKeyboard extends StatefulWidget {
   final Function(String) onKeyPress;
 
   OnScreenKeyboard({super.key, required this.onKeyPress});
 
-  final List<List<String>> keys = [
+  @override
+  State<OnScreenKeyboard> createState() => _OnScreenKeyboardState();
+}
+
+class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
+  bool isPolish = true;
+
+  List<List<String>> get keys => isPolish ? polishKeys : englishKeys;
+
+  final List<List<String>> polishKeys = [
+    ['Ą', 'Ć', 'Ę'],
+    ['Ł', 'Ń', 'Ó'],
+    ['Ś' ,'Ż', 'Ź'],
+  ];
+
+  final List<List<String>> englishKeys = [
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
     ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
     ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
@@ -31,73 +46,85 @@ class OnScreenKeyboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    const horizontalPadding = 16.0;
     const spacing = 4.0;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        // 🔤 Klawiatura literowa
         ...keys.map((row) {
-          final totalSpacing = spacing * (row.length - 1);
-          final buttonWidth =
-              (screenWidth - horizontalPadding * 2 - totalSpacing) / row.length;
-
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 2),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children:
-                  row.map((key) {
-                    return Container(
-                      margin: EdgeInsets.only(
-                        right: key != row.last ? spacing : 0,
-                      ),
-                      child: SizedBox(
-                        width: buttonWidth,
-                        height: 48,
-                        child: ElevatedButton(
-                          onPressed: () => onKeyPress(key),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: _getKeyColor(context, key),
-                            padding: EdgeInsets.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5),
-                            ),
+              children: row.map((key) {
+                return Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      right: key != row.last ? spacing : 0,
+                    ),
+                    child: SizedBox(
+                      height: 48,
+                      child: ElevatedButton(
+                        onPressed: () => widget.onKeyPress(key),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: _getKeyColor(context, key),
+                          padding: EdgeInsets.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
                           ),
-                          child: Text(
-                            key,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
+                        ),
+                        child: Text(
+                          key,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
                           ),
                         ),
                       ),
-                    );
-                  }).toList(),
+                    ),
+                  ),
+                );
+              }).toList(),
             ),
           );
         }).toList(),
 
         const SizedBox(height: 4),
 
+        // 🔘 ENTER, BACKSPACE i język
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: horizontalPadding),
+          padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // 🌐 Przycisk zmiany języka
+              SizedBox(
+                width: 48,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () => setState(() => isPolish = !isPolish),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey.shade400,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    padding: EdgeInsets.zero,
+                  ),
+                  child: const Icon(Icons.language, size: 20, color: Colors.black),
+                ),
+              ),
+              const SizedBox(width: spacing),
+
+              // ENTER
               Expanded(
                 flex: 2,
                 child: SizedBox(
                   height: 48,
                   child: ElevatedButton(
-                    onPressed: () => onKeyPress("ENTER"),
+                    onPressed: () => widget.onKeyPress("ENTER"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey.shade400,
-                      padding: EdgeInsets.zero,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
@@ -110,26 +137,22 @@ class OnScreenKeyboard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: spacing),
-              Expanded(
-                flex: 1,
-                child: SizedBox(
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: () => onKeyPress("BACKSPACE"),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade400,
-                      padding: EdgeInsets.zero,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
+
+              // BACKSPACE
+              SizedBox(
+                width: 48,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: () => widget.onKeyPress("BACKSPACE"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey.shade400,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
                     ),
-                    child: const Icon(
-                      Icons.backspace,
-                      size: 20,
-                      color: Colors.black,
-                    ),
+                    padding: EdgeInsets.zero,
+                    alignment: Alignment.center,
                   ),
+                  child: const Icon(Icons.backspace, size: 20, color: Colors.black),
                 ),
               ),
             ],
