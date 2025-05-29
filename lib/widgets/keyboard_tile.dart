@@ -34,24 +34,38 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
 
     switch (status) {
       case LetterStatus.correct:
-        return Colors.green;
+        return const Color(0xFF033774);
       case LetterStatus.present:
-        return Colors.orange;
+        return const Color(0xFFF3C623);
       case LetterStatus.absent:
-        return Colors.grey;
+        return const Color(0xFFD9001A);
       default:
-        return Colors.grey.shade400;
+        return Theme.of(context).colorScheme.primary;
     }
+  }
+
+  Color _getKeyTextColor(BuildContext context, String key) {
+    final gameState = Provider.of<GameState>(context);
+    final status = gameState.usedKeys[key];
+
+    if (status == LetterStatus.correct ||
+        status == LetterStatus.present ||
+        status == LetterStatus.absent) {
+      return Colors.white;
+    }
+    return Theme.of(context).colorScheme.secondary;
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    const horizontalPadding = 16.0;
     const spacing = 4.0;
+    final defaultColor = Theme.of(context).colorScheme.primary;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // 🔤 Klawiatura literowa
         ...keys.map((row) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 2),
@@ -87,13 +101,42 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                   ),
                 );
               }).toList(),
+              children: row.map((key) {
+                return Container(
+                  margin: EdgeInsets.only(
+                    right: key != row.last ? spacing : 0,
+                  ),
+                  child: SizedBox(
+                    width: buttonWidth,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: () => onKeyPress(key),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _getKeyColor(context, key),
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: Text(
+                        key,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: _getKeyTextColor(context, key),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
             ),
           );
         }).toList(),
 
         const SizedBox(height: 4),
 
-        // 🔘 ENTER, BACKSPACE i język
+
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Row(
@@ -122,16 +165,21 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                 child: SizedBox(
                   height: 48,
                   child: ElevatedButton(
-                    onPressed: () => widget.onKeyPress("ENTER"),
+                    onPressed: () => onKeyPress("ENTER"),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade400,
+                      backgroundColor: defaultColor,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "ENTER",
-                      style: TextStyle(fontSize: 14, color: Colors.black),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
                     ),
                   ),
                 ),
@@ -148,9 +196,27 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                     backgroundColor: Colors.grey.shade400,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
+              Expanded(
+                flex: 1,
+                child: SizedBox(
+                  height: 48,
+                  child: ElevatedButton(
+                    onPressed: () => onKeyPress("BACKSPACE"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                     ),
                     padding: EdgeInsets.zero,
                     alignment: Alignment.center,
+                    child: Icon(
+                      Icons.backspace,
+                      size: 20,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
                   child: const Icon(Icons.backspace, size: 20, color: Colors.black),
                 ),
