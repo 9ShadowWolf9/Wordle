@@ -13,6 +13,7 @@ class GameState extends ChangeNotifier {
   bool get gameLost {
     return currentRow >= maxRows && !gameWon;
   }
+
   bool get gameOver => gameWon || gameLost;
 
   late String targetWord;
@@ -122,8 +123,9 @@ class GameState extends ChangeNotifier {
     currentRow++;
     notifyListeners();
 
-    if (guess == targetWord){
+    if (guess == targetWord) {
       gameWon = true;
     }
+    return true;
   }
 }
