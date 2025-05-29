@@ -20,7 +20,6 @@ class LetterTile extends StatelessWidget {
       case LetterStatus.absent:
         return const Color(0xFFD9001A);
       case LetterStatus.initial:
-      default:
         return Theme.of(context).colorScheme.primary;
     }
   }

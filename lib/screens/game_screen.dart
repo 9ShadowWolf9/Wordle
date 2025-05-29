@@ -82,7 +82,7 @@ class GameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameState = Provider.of<GameState>(context, listen: false);
+    final _ = Provider.of<GameState>(context, listen: false);
 
     void handleKeyPress(String key) {
       final gameState = Provider.of<GameState>(context, listen: false);

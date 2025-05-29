@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:wordle/models/word_list.dart';
 import 'package:wordle/models/local_dictionary.dart';
