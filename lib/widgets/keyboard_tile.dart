@@ -12,7 +12,7 @@ class OnScreenKeyboard extends StatefulWidget {
 }
 
 class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
-  bool isPolish = true;
+  bool isPolish = false;
 
   List<List<String>> get keys => isPolish ? polishKeys : englishKeys;
 

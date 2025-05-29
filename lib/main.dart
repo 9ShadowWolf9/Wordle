@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wordle/screens/how_to_play.dart';
 import 'package:wordle/screens/settings_screen.dart';
 import 'package:wordle/themes/theme_provider.dart';
 import 'models/local_dictionary.dart';
@@ -82,6 +83,20 @@ class _MyAppState extends State<MyApp> {
                           MaterialPageRoute(
                             builder: (context) => SettingsScreen(),
                           ),
+                        );
+                      },
+                    ),
+              ),
+              Builder(
+                builder:
+                    (context) => ListTile(
+                      leading: Icon(Icons.question_mark),
+                      title: Text('How To Play'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HowToPlay()),
                         );
                       },
                     ),
