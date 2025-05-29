@@ -32,7 +32,8 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
     ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
     ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
   ];
-  bool _isPolishOnlyLetter(String key) {
+
+  bool _isPolishLetter(String key) {
     const polishOnlyLetters = {'Ę', 'Ó', 'Ą', 'Ś', 'Ł', 'Ż', 'Ź', 'Ć', 'Ń'};
     return polishOnlyLetters.contains(key);
   }
@@ -57,11 +58,16 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
     final gameState = Provider.of<GameState>(context);
     final status = gameState.usedKeys[key];
 
+    if (isPolish && !_isPolishLetter(key)) {
+      return Colors.black87; // tekst na szarym tle
+    }
+
     if (status == LetterStatus.correct ||
         status == LetterStatus.present ||
         status == LetterStatus.absent) {
       return Colors.white;
     }
+
     return Theme.of(context).colorScheme.secondary;
   }
 
@@ -87,9 +93,11 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                         child: SizedBox(
                           height: 48,
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: (widget.gameOver || (isPolish && !_isPolishLetter(key)))
+                                ? null
+                                : () {
                               widget.onKeyPress(key);
-                              if (isPolish && _isPolishOnlyLetter(key)) {
+                              if (isPolish && _isPolishLetter(key)) {
                                 setState(() {
                                   isPolish = false;
                                 });
