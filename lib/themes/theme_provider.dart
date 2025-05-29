@@ -25,4 +25,13 @@ class ThemeProvider extends ChangeNotifier {
     _currentTheme = theme;
     notifyListeners();
   }
+
+  // Custom URL logic based on theme
+  String get currentUrl {
+    if (_currentTheme == AppTheme.light) {
+      return 'assets/asd.png';
+    } else {
+      return 'assets/asdwhite.png';
+    }
+  }
 }

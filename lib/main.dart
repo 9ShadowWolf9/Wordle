@@ -79,11 +79,12 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
           child: Column(
             children: [
               DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
-                ),
                 child: Center(
-                  child: Image(image: AssetImage('assets/asd.png')),
+                  child: Image(
+                    image: AssetImage(
+                      Provider.of<ThemeProvider>(context).currentUrl,
+                    ),
+                  ),
                 ),
               ),
               Builder(
@@ -164,7 +165,10 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
               SizedBox(
                 height: 50,
-                child: Image.asset('assets/asd.png', fit: BoxFit.contain),
+                child: Image.asset(
+                  Provider.of<ThemeProvider>(context).currentUrl,
+                  fit: BoxFit.contain,
+                ),
               ),
               Material(
                 color: Colors.transparent,
