@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wordle/screens/settings_screen.dart';
 import 'package:wordle/themes/theme_provider.dart';
+import 'models/local_dictionary.dart';
 import 'screens/game_screen.dart';
 import 'models/word_list.dart';
 import 'models/game_logic.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalDictionary.loadDictionary();
   runApp(
     MultiProvider(
       providers: [
@@ -51,7 +54,7 @@ class _MyAppState extends State<MyApp> {
             children: [
               DrawerHeader(
                 child: Center(
-                  child: Image(image: AssetImage('images/bocian.png')),
+                  child: Image(image: AssetImage('assets/bocian.png')),
                 ),
               ),
               ListTile(
