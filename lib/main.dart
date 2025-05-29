@@ -5,12 +5,13 @@ import 'package:wordle/screens/settings_screen.dart';
 import 'package:wordle/themes/theme_provider.dart';
 import 'models/local_dictionary.dart';
 import 'screens/game_screen.dart';
-import 'models/word_list.dart';
+import 'package:flutter/services.dart';
 import 'models/game_logic.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await LocalDictionary.loadDictionary();
   runApp(
     MultiProvider(
