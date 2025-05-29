@@ -5,6 +5,7 @@ import 'package:wordle/themes/theme_provider.dart';
 import 'screens/game_screen.dart';
 import 'models/word_list.dart';
 import 'models/game_logic.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(
@@ -25,6 +26,18 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  Future<void> _launchGooglePlay() async {
+    const url =
+        'https://play.google.com/store/apps/details?id=pl.bocianpozyczki.portmoneta';
+    final uri = Uri.parse(url);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -59,6 +72,14 @@ class _MyAppState extends State<MyApp> {
                           builder: (context) => SettingsScreen(),
                         ),
                       );
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.open_in_new),
+                    title: Text('Get Official App'),
+                    onTap: () {
+                      Navigator.pop(context); // Close the drawer
+                      _launchGooglePlay();
                     },
                   ),
                 ],

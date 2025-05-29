@@ -16,7 +16,7 @@ class GameScreen extends StatelessWidget {
         gameState.submitWord();
       } else if (key == 'BACKSPACE') {
         gameState.removeLetter();
-      } else if (RegExp(r'^[A-Z]$').hasMatch(key)) {
+      } else {
         gameState.addLetter(key);
       }
     }
