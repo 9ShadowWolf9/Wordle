@@ -8,10 +8,7 @@ class HowToPlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Zasady gry'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Zasady Gry'), centerTitle: true),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -42,22 +39,42 @@ class HowToPlay extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
-            _exampleRow(context, 'WEARY', 0, LetterStatus.correct,
-                'Litera W jest w słowie i na właściwym miejscu.'),
+            _exampleRow(
+              context,
+              'WEARY',
+              0,
+              LetterStatus.correct,
+              'Litera W jest w słowie i na właściwym miejscu.',
+            ),
             const SizedBox(height: 12),
-            _exampleRow(context, 'PILLS', 1, LetterStatus.present,
-                'Litera I jest w słowie, ale na niewłaściwym miejscu.'),
+            _exampleRow(
+              context,
+              'PILLS',
+              1,
+              LetterStatus.present,
+              'Litera I jest w słowie, ale na niewłaściwym miejscu.',
+            ),
             const SizedBox(height: 12),
-            _exampleRow(context, 'VAGUE', 3, LetterStatus.absent,
-                'Litera U nie występuje w słowie.'),
+            _exampleRow(
+              context,
+              'VAGUE',
+              3,
+              LetterStatus.absent,
+              'Litera U nie występuje w słowie.',
+            ),
           ],
         ),
       ),
     );
   }
 
-  static Widget _exampleRow(BuildContext context, String word, int highlightIndex,
-      LetterStatus status, String explanation) {
+  static Widget _exampleRow(
+    BuildContext context,
+    String word,
+    int highlightIndex,
+    LetterStatus status,
+    String explanation,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

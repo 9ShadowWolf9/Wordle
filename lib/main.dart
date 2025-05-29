@@ -99,7 +99,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                 builder:
                     (context) => ListTile(
                       leading: Icon(Icons.settings),
-                      title: Text('Settings'),
+                      title: Text('Ustawienia'),
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.push(
@@ -115,7 +115,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                 builder:
                     (context) => ListTile(
                       leading: Icon(Icons.question_mark),
-                      title: Text('How To Play'),
+                      title: Text('Zasady Gry'),
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.push(
@@ -130,7 +130,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                 builder:
                     (context) => ListTile(
                       leading: Icon(Icons.open_in_new),
-                      title: Text('Get Official App'),
+                      title: Text('Zainstaluj Aplikację'),
                       onTap: () {
                         Navigator.pop(context);
                         _launchGooglePlay();

@@ -8,38 +8,74 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final currentTheme = themeProvider.currentTheme;
+
     return Scaffold(
-      appBar: AppBar(title: Text('Ustawienia')),
+      appBar: AppBar(title: const Text('Ustawienia')),
       body: Container(
+        margin: const EdgeInsets.all(25),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(12),
         ),
-        padding: EdgeInsets.all(16),
-        margin: EdgeInsets.all(25),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
           children: [
-            Text(
-              'Dark Mode',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.surface,
-              ),
-            ),
-            CupertinoSwitch(
-              activeColor: Theme.of(context).colorScheme.surface,
-              value:
-                  Provider.of<ThemeProvider>(context, listen: false).isDarkMode,
+            _buildThemeSwitch(
+              context,
+              label: 'Light Mode',
+              isActive: currentTheme == AppTheme.light,
               onChanged: (value) {
-                Provider.of<ThemeProvider>(
-                  context,
-                  listen: false,
-                ).toggleTheme();
+                if (value) themeProvider.setTheme(AppTheme.light);
+              },
+            ),
+            _buildThemeSwitch(
+              context,
+              label: 'Dark Mode',
+              isActive: currentTheme == AppTheme.dark,
+              onChanged: (value) {
+                if (value) themeProvider.setTheme(AppTheme.dark);
+              },
+            ),
+            _buildThemeSwitch(
+              context,
+              label: 'Night Mode',
+              isActive: currentTheme == AppTheme.night,
+              onChanged: (value) {
+                if (value) themeProvider.setTheme(AppTheme.night);
               },
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildThemeSwitch(
+    BuildContext context, {
+    required String label,
+    required bool isActive,
+    required ValueChanged<bool> onChanged,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.surface,
+            ),
+          ),
+          CupertinoSwitch(
+            value: isActive,
+            activeColor: Theme.of(context).colorScheme.surface,
+            onChanged: onChanged,
+          ),
+        ],
       ),
     );
   }
