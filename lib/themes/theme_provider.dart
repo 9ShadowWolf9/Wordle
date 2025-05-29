@@ -26,7 +26,6 @@ class ThemeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Custom URL logic based on theme
   String get currentUrl {
     if (_currentTheme == AppTheme.light) {
       return 'assets/asd.png';
