@@ -28,8 +28,32 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
+  bool _isAnimating = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.3,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   Future<void> _launchGooglePlay() async {
     const url =
@@ -75,7 +99,7 @@ class _MyAppState extends State<MyApp> {
                 builder:
                     (context) => ListTile(
                       leading: Icon(Icons.settings),
-                      title: Text('Ustawienia'),
+                      title: Text('Settings'),
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.push(
@@ -91,7 +115,7 @@ class _MyAppState extends State<MyApp> {
                 builder:
                     (context) => ListTile(
                       leading: Icon(Icons.question_mark),
-                      title: Text('Zasady gry'),
+                      title: Text('How To Play'),
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.push(
@@ -106,7 +130,7 @@ class _MyAppState extends State<MyApp> {
                 builder:
                     (context) => ListTile(
                       leading: Icon(Icons.open_in_new),
-                      title: Text('Pobierz aplikację'),
+                      title: Text('Get Official App'),
                       onTap: () {
                         Navigator.pop(context);
                         _launchGooglePlay();
@@ -149,8 +173,29 @@ class _MyAppState extends State<MyApp> {
                     Provider.of<GameState>(context, listen: false).reset();
                   },
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.refresh, size: 32),
+                    padding: const EdgeInsets.all(10.0),
+                    child: Consumer<GameState>(
+                      builder: (context, gameState, _) {
+                        if (gameState.gameOver && !_isAnimating) {
+                          _controller.repeat(reverse: true);
+                          _isAnimating = true;
+                        } else if (!gameState.gameOver && _isAnimating) {
+                          _controller.stop();
+                          _controller.reset();
+                          _isAnimating = false;
+                        }
+
+                        return ScaleTransition(
+                          scale: _scaleAnimation,
+                          child: Icon(
+                            Icons.refresh,
+                            size: 32,
+                            color:
+                                gameState.gameOver ? Colors.red : Colors.black,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),

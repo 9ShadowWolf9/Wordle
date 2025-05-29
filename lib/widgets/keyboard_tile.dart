@@ -4,8 +4,9 @@ import 'package:wordle/models/game_logic.dart';
 
 class OnScreenKeyboard extends StatefulWidget {
   final Function(String) onKeyPress;
+  final bool gameOver;
 
-  OnScreenKeyboard({super.key, required this.onKeyPress});
+  OnScreenKeyboard({super.key, required this.onKeyPress, required this.gameOver});
 
   @override
   State<OnScreenKeyboard> createState() => _OnScreenKeyboardState();
@@ -17,9 +18,9 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
   List<List<String>> get keys => isPolish ? polishKeys : englishKeys;
 
   final List<List<String>> polishKeys = [
-    ['Ą', 'Ć', 'Ę'],
-    ['Ł', 'Ń', 'Ó'],
-    ['Ś', 'Ż', 'Ź'],
+    ['Q', 'W', 'Ę', 'R', 'T', 'Y', 'U', 'I', 'Ó', 'P'],
+    ['Ą', 'Ś', 'D', 'F', 'G', 'H', 'J', 'K', 'Ł'],
+    ['Ż', 'Ź', 'Ć', 'V', 'B', 'Ń', 'M'],
   ];
 
   final List<List<String>> englishKeys = [
@@ -63,7 +64,6 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Keyboard rows
         ...keys.map((row) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 2),
@@ -106,12 +106,10 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
 
         const SizedBox(height: 8),
 
-        // Bottom row with language switch, ENTER, BACKSPACE
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Row(
             children: [
-              // Language toggle button
               SizedBox(
                 width: 48,
                 height: 48,
@@ -133,7 +131,6 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
               ),
               const SizedBox(width: spacing),
 
-              // ENTER button (flex 2)
               Expanded(
                 flex: 2,
                 child: SizedBox(
@@ -160,7 +157,6 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
               ),
               const SizedBox(width: spacing),
 
-              // BACKSPACE button
               SizedBox(
                 width: 48,
                 height: 48,
