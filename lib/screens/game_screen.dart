@@ -108,10 +108,14 @@ class GameScreen extends StatelessWidget {
     return Consumer<GameState>(
       builder: (context, gameState, _) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (gameState.gameWon) {
-            _showWinDialog(context, gameState);
-          } else if (gameState.gameLost) {
-            _showLoseDialog(context, gameState);
+          if (!gameState.dialogShown) {
+            if (gameState.gameWon) {
+              _showWinDialog(context, gameState);
+              gameState.markDialogShown();
+            } else if (gameState.gameLost) {
+              _showLoseDialog(context, gameState);
+              gameState.markDialogShown();
+            }
           }
         });
 

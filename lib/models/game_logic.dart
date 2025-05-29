@@ -9,10 +9,13 @@ enum LetterStatus { initial, correct, present, absent }
 class GameState extends ChangeNotifier {
   final int maxRows = 6;
   final int wordLength = 5;
+
   bool gameWon = false;
-  bool get gameLost {
-    return currentRow >= maxRows && !gameWon;
-  }
+  bool _dialogShown = false;
+
+  bool get dialogShown => _dialogShown;
+
+  bool get gameLost => currentRow >= maxRows && !gameWon;
 
   bool get gameOver => gameWon || gameLost;
 
@@ -53,8 +56,13 @@ class GameState extends ChangeNotifier {
     );
     usedKeys.clear();
     currentRow = 0;
-    notifyListeners();
     gameWon = false;
+    _dialogShown = false;
+    notifyListeners();
+  }
+
+  void markDialogShown() {
+    _dialogShown = true;
   }
 
   void addLetter(String letter) {
@@ -86,7 +94,7 @@ class GameState extends ChangeNotifier {
 
     if (!LocalDictionary.isValidWord(guess)) {
       debugPrint('Invalid word: $guess');
-      return false; // Notify caller the word is invalid
+      return false;
     }
 
     List<LetterStatus> status = List.filled(wordLength, LetterStatus.absent);
@@ -126,6 +134,7 @@ class GameState extends ChangeNotifier {
     if (guess == targetWord) {
       gameWon = true;
     }
+
     return true;
   }
 }
