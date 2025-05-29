@@ -5,12 +5,13 @@ import 'package:wordle/screens/settings_screen.dart';
 import 'package:wordle/themes/theme_provider.dart';
 import 'models/local_dictionary.dart';
 import 'screens/game_screen.dart';
-import 'models/word_list.dart';
+import 'package:flutter/services.dart';
 import 'models/game_logic.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await LocalDictionary.loadDictionary();
   runApp(
     MultiProvider(
@@ -160,9 +161,22 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                   ),
                 ),
               ),
-              Text(
-                'WORDLE',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+
+              Row(
+                children: [
+                  Text(
+                    'W',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  ),
+                  Text(
+                    'O',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.red),
+                  ),
+                  Text(
+                    'RDLE',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  ),
+                ],
               ),
               Material(
                 color: Colors.transparent,
@@ -191,7 +205,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                             Icons.refresh,
                             size: 32,
                             color:
-                                gameState.gameOver ? Colors.red : Colors.black,
+                                gameState.gameOver ? Colors.red : Theme.of(context).colorScheme.onSurface,
                           ),
                         );
                       },
