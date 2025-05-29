@@ -83,7 +83,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                   color: Theme.of(context).colorScheme.surface,
                 ),
                 child: Center(
-                  child: Image(image: AssetImage('assets/bocian.png')),
+                  child: Image(image: AssetImage('assets/asd.png')),
                 ),
               ),
               Builder(
@@ -162,21 +162,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                 ),
               ),
 
-              Row(
-                children: [
-                  Text(
-                    'W',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                  ),
-                  Text(
-                    'O',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.red),
-                  ),
-                  Text(
-                    'RDLE',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                  ),
-                ],
+              SizedBox(
+                height: 50,
+                child: Image.asset('assets/asd.png', fit: BoxFit.contain),
               ),
               Material(
                 color: Colors.transparent,
@@ -205,7 +193,9 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                             Icons.refresh,
                             size: 32,
                             color:
-                                gameState.gameOver ? Colors.red : Theme.of(context).colorScheme.onSurface,
+                                gameState.gameOver
+                                    ? Colors.red
+                                    : Theme.of(context).colorScheme.onSurface,
                           ),
                         );
                       },
