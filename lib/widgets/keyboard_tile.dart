@@ -118,16 +118,16 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                 child: ElevatedButton(
                   onPressed: () => setState(() => isPolish = !isPolish),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey.shade400,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),
                     padding: EdgeInsets.zero,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.language,
                     size: 20,
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),
@@ -167,13 +167,17 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                 child: ElevatedButton(
                   onPressed: () => widget.onKeyPress("BACKSPACE"),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey.shade400,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),
                     padding: EdgeInsets.zero,
                   ),
-                  child: Icon(Icons.backspace, size: 20, color: Colors.black),
+                  child: Icon(
+                    Icons.backspace,
+                    size: 20,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
               ),
             ],
