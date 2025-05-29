@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wordle/models/game_logic.dart';
 
 class OnScreenKeyboard extends StatelessWidget {
   final Function(String) onKeyPress;
@@ -10,6 +12,22 @@ class OnScreenKeyboard extends StatelessWidget {
     ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
     ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
   ];
+
+  Color _getKeyColor(BuildContext context, String key) {
+    final gameState = Provider.of<GameState>(context);
+    final status = gameState.usedKeys[key];
+
+    switch (status) {
+      case LetterStatus.correct:
+        return Colors.green;
+      case LetterStatus.present:
+        return Colors.orange;
+      case LetterStatus.absent:
+        return Colors.grey;
+      default:
+        return Colors.grey.shade400;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +60,7 @@ class OnScreenKeyboard extends StatelessWidget {
                         child: ElevatedButton(
                           onPressed: () => onKeyPress(key),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            backgroundColor: _getKeyColor(context, key),
                             padding: EdgeInsets.zero,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             shape: RoundedRectangleBorder(
@@ -51,9 +69,9 @@ class OnScreenKeyboard extends StatelessWidget {
                           ),
                           child: Text(
                             key,
-                            style:  TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: Colors.black,
                             ),
                           ),
                         ),
@@ -79,16 +97,16 @@ class OnScreenKeyboard extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () => onKeyPress("ENTER"),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      backgroundColor: defaultColor,
                       padding: EdgeInsets.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       "ENTER",
-                      style: TextStyle(fontSize: 14, color: Theme.of(context).colorScheme.secondary),
+                      style: TextStyle(fontSize: 14, color: Colors.black),
                     ),
                   ),
                 ),
@@ -101,17 +119,17 @@ class OnScreenKeyboard extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () => onKeyPress("BACKSPACE"),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      backgroundColor: Colors.grey.shade400,
                       padding: EdgeInsets.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
-                    child:  Icon(
+                    child: const Icon(
                       Icons.backspace,
                       size: 20,
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: Colors.black,
                     ),
                   ),
                 ),

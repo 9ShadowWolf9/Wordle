@@ -4,19 +4,27 @@ import 'package:wordle/screens/settings_screen.dart';
 import 'package:wordle/themes/theme_provider.dart';
 import 'screens/game_screen.dart';
 import 'models/word_list.dart';
+import 'models/game_logic.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => GameState()),
+      ],
       child: MyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -88,8 +96,7 @@ class MyApp extends StatelessWidget {
                 child: InkWell(
                   customBorder: CircleBorder(),
                   onTap: () {
-                    var word = WordList.getRandomWord();
-                    print(word.word);
+                    Provider.of<GameState>(context, listen: false).reset();
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
