@@ -65,20 +65,19 @@ class GameState extends ChangeNotifier {
     }
   }
 
-  void submitWord() {
+  bool submitWord() {
     if (!dictionaryLoaded) {
       debugPrint('Dictionary not loaded yet.');
-      return;
+      return false;
     }
 
-    if (guesses[currentRow].length != wordLength) return;
+    if (guesses[currentRow].length != wordLength) return false;
 
     String guess = guesses[currentRow].toUpperCase();
 
     if (!LocalDictionary.isValidWord(guess)) {
       debugPrint('Invalid word: $guess');
-      // Optionally notify the UI here with a message
-      return; // Reject the guess if not in dictionary
+      return false; // Notify caller the word is invalid
     }
 
     List<LetterStatus> status = List.filled(wordLength, LetterStatus.absent);
@@ -114,5 +113,6 @@ class GameState extends ChangeNotifier {
     tileStatuses[currentRow] = status;
     currentRow++;
     notifyListeners();
+    return true; // Word was valid
   }
 }

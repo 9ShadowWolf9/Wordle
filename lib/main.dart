@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
                 builder:
                     (context) => ListTile(
                       leading: Icon(Icons.settings),
-                      title: Text('Settings'),
+                      title: Text('Ustawienia'),
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.push(
@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
                 builder:
                     (context) => ListTile(
                       leading: Icon(Icons.question_mark),
-                      title: Text('How To Play'),
+                      title: Text('Zasady gry'),
                       onTap: () {
                         Navigator.pop(context);
                         Navigator.push(
@@ -106,7 +106,7 @@ class _MyAppState extends State<MyApp> {
                 builder:
                     (context) => ListTile(
                       leading: Icon(Icons.open_in_new),
-                      title: Text('Get Official App'),
+                      title: Text('Pobierz aplikację'),
                       onTap: () {
                         Navigator.pop(context);
                         _launchGooglePlay();
