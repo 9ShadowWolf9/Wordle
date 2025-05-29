@@ -6,7 +6,11 @@ class OnScreenKeyboard extends StatefulWidget {
   final Function(String) onKeyPress;
   final bool gameOver;
 
-  OnScreenKeyboard({super.key, required this.onKeyPress, required this.gameOver});
+  OnScreenKeyboard({
+    super.key,
+    required this.onKeyPress,
+    required this.gameOver,
+  });
 
   @override
   State<OnScreenKeyboard> createState() => _OnScreenKeyboardState();
@@ -28,6 +32,10 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
     ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
     ['Z', 'X', 'C', 'V', 'B', 'N', 'M'],
   ];
+  bool _isPolishOnlyLetter(String key) {
+    const polishOnlyLetters = {'Ę', 'Ó', 'Ą', 'Ś', 'Ł', 'Ż', 'Ź', 'Ć', 'Ń'};
+    return polishOnlyLetters.contains(key);
+  }
 
   Color _getKeyColor(BuildContext context, String key) {
     final gameState = Provider.of<GameState>(context);
@@ -79,7 +87,15 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                         child: SizedBox(
                           height: 48,
                           child: ElevatedButton(
-                            onPressed: () => widget.onKeyPress(key),
+                            onPressed: () {
+                              widget.onKeyPress(key);
+                              if (isPolish && _isPolishOnlyLetter(key)) {
+                                setState(() {
+                                  isPolish = false;
+                                });
+                              }
+                            },
+
                             style: ElevatedButton.styleFrom(
                               backgroundColor: _getKeyColor(context, key),
                               padding: EdgeInsets.zero,
