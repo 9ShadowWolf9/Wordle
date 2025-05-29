@@ -136,9 +136,25 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
               ),
-              Text(
-                'WORDLE',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+              Row(
+                children: [
+                  Text(
+                    'W',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  ),
+                  Text(
+                    'O',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                      color: Colors.red,
+                    ),
+                  ),
+                  Text(
+                    'RDLE',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  ),
+                ],
               ),
               Material(
                 color: Colors.transparent,
