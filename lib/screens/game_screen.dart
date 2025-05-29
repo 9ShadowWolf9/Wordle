@@ -23,11 +23,17 @@ class GameScreen extends StatelessWidget {
   }
 
   void _showLoseDialog(BuildContext context, GameState gameState) {
+    final onSurfaceColor = Theme.of(context).colorScheme.onSurface;
+
     Alert(
       context: context,
       type: AlertType.error,
       title: "😢 Przegrałeś!",
       desc: "Prawidłowe słowo to: ${gameState.targetWord}",
+      style: AlertStyle(
+        titleStyle: TextStyle(color: onSurfaceColor),
+        descStyle: TextStyle(color: onSurfaceColor),
+      ),
       buttons: [
         DialogButton(
           child: const Text(
@@ -46,11 +52,17 @@ class GameScreen extends StatelessWidget {
   }
 
   void _showWinDialog(BuildContext context, GameState gameState) {
+    final onSurfaceColor = Theme.of(context).colorScheme.onSurface;
+
     Alert(
       context: context,
       type: AlertType.success,
       title: "🎉 Wygrałeś!",
       desc: "Udało Ci się odgadnąć słowo!",
+      style: AlertStyle(
+        titleStyle: TextStyle(color: onSurfaceColor),
+        descStyle: TextStyle(color: onSurfaceColor),
+      ),
       buttons: [
         DialogButton(
           child: const Text(

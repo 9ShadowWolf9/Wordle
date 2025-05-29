@@ -204,7 +204,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
                             Icons.refresh,
                             size: 32,
                             color:
-                                gameState.gameOver ? Colors.red : Colors.black,
+                                gameState.gameOver ? Colors.red : Theme.of(context).colorScheme.onSurface,
                           ),
                         );
                       },
