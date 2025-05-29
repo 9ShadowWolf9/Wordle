@@ -14,12 +14,7 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Ustawienia')),
       body: Container(
-        margin: const EdgeInsets.all(25),
         padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
-          borderRadius: BorderRadius.circular(12),
-        ),
         child: Column(
           children: [
             _buildThemeSwitch(
@@ -58,8 +53,13 @@ class SettingsScreen extends StatelessWidget {
     required bool isActive,
     required ValueChanged<bool> onChanged,
   }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.secondary,
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -68,6 +68,7 @@ class SettingsScreen extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.surface,
+              fontSize: 16,
             ),
           ),
           CupertinoSwitch(
