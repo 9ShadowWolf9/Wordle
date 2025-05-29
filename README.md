@@ -1,6 +1,6 @@
 # wordle
 
-A new Flutter project.
+Projekt gry typu Wordle zrobiony na praktykach.
 
 ## Getting Started
 
