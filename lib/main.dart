@@ -53,6 +53,9 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             children: [
               DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surface,
+                ),
                 child: Center(
                   child: Image(image: AssetImage('assets/bocian.png')),
                 ),
