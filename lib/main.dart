@@ -26,6 +26,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   Future<void> _launchGooglePlay() async {
     const url =
         'https://play.google.com/store/apps/details?id=pl.bocianpozyczki.portmoneta';
@@ -46,45 +47,42 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         key: scaffoldKey,
         drawer: Drawer(
-          child: Builder(
-            builder: (BuildContext context) {
-              return ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  DrawerHeader(
-                    child: Center(child: Icon(Icons.account_balance, size: 40)),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.home),
-                    title: Text('Wordle'),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text('Settings'),
-                    onTap: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SettingsScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.open_in_new),
-                    title: Text('Get Official App'),
-                    onTap: () {
-                      Navigator.pop(context); // Close the drawer
-                      _launchGooglePlay();
-                    },
-                  ),
-                ],
-              );
-            },
+          child: Column(
+            children: [
+              DrawerHeader(
+                child: Center(child: Icon(Icons.account_balance, size: 40)),
+              ),
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text('Wordle'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsScreen()),
+                  );
+                },
+              ),
+              Spacer(), // Pushes the next ListTile to the bottom
+              Builder(
+                builder:
+                    (context) => ListTile(
+                      leading: Icon(Icons.open_in_new),
+                      title: Text('Get Official App'),
+                      onTap: () {
+                        Navigator.pop(context); // Uses correct context
+                        _launchGooglePlay();
+                      },
+                    ),
+              ),
+            ],
           ),
         ),
         appBar: AppBar(
