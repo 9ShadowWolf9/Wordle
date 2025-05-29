@@ -50,7 +50,9 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             children: [
               DrawerHeader(
-                child: Center(child: Icon(Icons.account_balance, size: 40)),
+                child: Center(
+                  child: Image(image: AssetImage('images/bocian.png')),
+                ),
               ),
               ListTile(
                 leading: Icon(Icons.home),
@@ -70,14 +72,14 @@ class _MyAppState extends State<MyApp> {
                   );
                 },
               ),
-              Spacer(), // Pushes the next ListTile to the bottom
+              Spacer(),
               Builder(
                 builder:
                     (context) => ListTile(
                       leading: Icon(Icons.open_in_new),
                       title: Text('Get Official App'),
                       onTap: () {
-                        Navigator.pop(context); // Uses correct context
+                        Navigator.pop(context);
                         _launchGooglePlay();
                       },
                     ),
