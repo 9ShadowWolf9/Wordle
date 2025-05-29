@@ -19,7 +19,7 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
   final List<List<String>> polishKeys = [
     ['Ą', 'Ć', 'Ę'],
     ['Ł', 'Ń', 'Ó'],
-    ['Ś' ,'Ż', 'Ź'],
+    ['Ś', 'Ż', 'Ź'],
   ];
 
   final List<List<String>> englishKeys = [
@@ -58,90 +58,60 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    const horizontalPadding = 16.0;
     const spacing = 4.0;
-    final defaultColor = Theme.of(context).colorScheme.primary;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        // Keyboard rows
         ...keys.map((row) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 2),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: row.map((key) {
-                return Expanded(
-                  child: Container(
-                    margin: EdgeInsets.only(
-                      right: key != row.last ? spacing : 0,
-                    ),
-                    child: SizedBox(
-                      height: 48,
-                      child: ElevatedButton(
-                        onPressed: () => widget.onKeyPress(key),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: _getKeyColor(context, key),
-                          padding: EdgeInsets.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
+              children:
+                  row.map((key) {
+                    return Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          right: key != row.last ? spacing : 0,
+                        ),
+                        child: SizedBox(
+                          height: 48,
+                          child: ElevatedButton(
+                            onPressed: () => widget.onKeyPress(key),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: _getKeyColor(context, key),
+                              padding: EdgeInsets.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            child: Text(
+                              key,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: _getKeyTextColor(context, key),
+                              ),
+                            ),
                           ),
                         ),
-                        child: Text(
-                          key,
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                          ),
-                        ),
                       ),
-                    ),
-                  ),
-                );
-              }).toList(),
-              children: row.map((key) {
-                return Container(
-                  margin: EdgeInsets.only(
-                    right: key != row.last ? spacing : 0,
-                  ),
-                  child: SizedBox(
-                    width: buttonWidth,
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: () => onKeyPress(key),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: _getKeyColor(context, key),
-                        padding: EdgeInsets.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: Text(
-                        key,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: _getKeyTextColor(context, key),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
+                    );
+                  }).toList(),
             ),
           );
         }).toList(),
 
-        const SizedBox(height: 4),
+        const SizedBox(height: 8),
 
-
+        // Bottom row with language switch, ENTER, BACKSPACE
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0),
           child: Row(
             children: [
-              // 🌐 Przycisk zmiany języka
+              // Language toggle button
               SizedBox(
                 width: 48,
                 height: 48,
@@ -154,20 +124,24 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                     ),
                     padding: EdgeInsets.zero,
                   ),
-                  child: const Icon(Icons.language, size: 20, color: Colors.black),
+                  child: const Icon(
+                    Icons.language,
+                    size: 20,
+                    color: Colors.black,
+                  ),
                 ),
               ),
               const SizedBox(width: spacing),
 
-              // ENTER
+              // ENTER button (flex 2)
               Expanded(
                 flex: 2,
                 child: SizedBox(
                   height: 48,
                   child: ElevatedButton(
-                    onPressed: () => onKeyPress("ENTER"),
+                    onPressed: () => widget.onKeyPress("ENTER"),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: defaultColor,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
                       padding: EdgeInsets.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       shape: RoundedRectangleBorder(
@@ -186,7 +160,7 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
               ),
               const SizedBox(width: spacing),
 
-              // BACKSPACE
+              // BACKSPACE button
               SizedBox(
                 width: 48,
                 height: 48,
@@ -196,29 +170,10 @@ class _OnScreenKeyboardState extends State<OnScreenKeyboard> {
                     backgroundColor: Colors.grey.shade400,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
-              Expanded(
-                flex: 1,
-                child: SizedBox(
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: () => onKeyPress("BACKSPACE"),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      padding: EdgeInsets.zero,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
                     ),
                     padding: EdgeInsets.zero,
-                    alignment: Alignment.center,
-                    child: Icon(
-                      Icons.backspace,
-                      size: 20,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
                   ),
-                  child: const Icon(Icons.backspace, size: 20, color: Colors.black),
+                  child: Icon(Icons.backspace, size: 20, color: Colors.black),
                 ),
               ),
             ],

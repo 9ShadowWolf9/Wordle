@@ -20,8 +20,15 @@ class SettingsScreen extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Dark Mode', style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary)),
+            Text(
+              'Dark Mode',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.surface,
+              ),
+            ),
             CupertinoSwitch(
+              activeColor: Theme.of(context).colorScheme.surface,
               value:
                   Provider.of<ThemeProvider>(context, listen: false).isDarkMode,
               onChanged: (value) {

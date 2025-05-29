@@ -57,23 +57,31 @@ class _MyAppState extends State<MyApp> {
                   child: Image(image: AssetImage('assets/bocian.png')),
                 ),
               ),
-              ListTile(
-                leading: Icon(Icons.home),
-                title: Text('Wordle'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
+              Builder(
+                builder:
+                    (context) => ListTile(
+                      leading: Icon(Icons.home),
+                      title: Text('Wordle'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
               ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SettingsScreen()),
-                  );
-                },
+              Builder(
+                builder:
+                    (context) => ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text('Settings'),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SettingsScreen(),
+                          ),
+                        );
+                      },
+                    ),
               ),
               Spacer(),
               Builder(
