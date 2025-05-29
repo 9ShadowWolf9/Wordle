@@ -1,12 +1,19 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:wordle/models/word_list.dart';
-import 'package:wordle/models/local_dictionary.dart'; // Import your dictionary helper
+import 'package:wordle/models/local_dictionary.dart';
 
 enum LetterStatus { initial, correct, present, absent }
 
 class GameState extends ChangeNotifier {
   final int maxRows = 6;
   final int wordLength = 5;
+  bool gameWon = false;
+  bool get gameLost {
+    return currentRow >= maxRows && !gameWon;
+  }
+  bool get gameOver => gameWon || gameLost;
 
   late String targetWord;
   List<String> guesses = List.generate(6, (_) => '');
@@ -46,6 +53,7 @@ class GameState extends ChangeNotifier {
     usedKeys.clear();
     currentRow = 0;
     notifyListeners();
+    gameWon = false;
   }
 
   void addLetter(String letter) {
@@ -77,8 +85,7 @@ class GameState extends ChangeNotifier {
 
     if (!LocalDictionary.isValidWord(guess)) {
       debugPrint('Invalid word: $guess');
-      // Optionally notify the UI here with a message
-      return; // Reject the guess if not in dictionary
+      return;
     }
 
     List<LetterStatus> status = List.filled(wordLength, LetterStatus.absent);
@@ -114,5 +121,9 @@ class GameState extends ChangeNotifier {
     tileStatuses[currentRow] = status;
     currentRow++;
     notifyListeners();
+
+    if (guess == targetWord){
+      gameWon = true;
+    }
   }
 }
